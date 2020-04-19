@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using PolatlıEksozSiparisForm.Models.VMs
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -13,15 +14,16 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css" type="text/css">
+    <script src="~/Scripts/jquery-3.5.0.js"></script>
+    <link rel="stylesheet" href="/Content/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/Content/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -57,11 +59,11 @@
                     }
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="~/Content/img/flag-1.jpg" data-imagecss="flag yt"
+                            <option value='yt' data-image="/Content/img/flag-1.jpg" data-imagecss="flag yt"
                                     data-title="English">
                                 English
                             </option>
-                            <option value='yu' data-image="~/Content/img/flag-2.jpg" data-imagecss="flag yu"
+                            <option value='yu' data-image="/Content/img/flag-2.jpg" data-imagecss="flag yu"
                                     data-title="Bangladesh">
                                 German
                             </option>
@@ -71,7 +73,7 @@
                         <a href="#"><i class="ti-facebook"></i></a>
                         <a href="#"><i class="ti-twitter-alt"></i></a>
                         <a href="#"><i class="ti-instagram"></i></a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -82,7 +84,7 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="/Home/Index">
-                                <img src="~/Content/img/logo.png" alt="">
+                                <img src="/Content/img/logo.png" alt="">
                             </a>
                         </div>
                     </div>
@@ -106,47 +108,11 @@
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span id="sepetUrunAdedi">@Session["SepetUrunAdedi"]</span>
                                 </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="~/Content/img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="~/Content/img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">Sepetim</a>
-                                        <a href="#" class="primary-btn checkout-btn">Ödeme Yap</a>
-                                    </div>
+
+                                <div class="cart-hover" id="sepetID">
+                                    @Html.Partial("~/Views/Home/SepetPartial.cshtml")
                                 </div>
                             </li>
                             <li class="cart-price">$150.00</li>
@@ -184,7 +150,7 @@
                                 <li><a href="#">Katalizör</a></li>
                             </ul>
                         </li>
-                        
+
                         <li><a href="/Home/Contact">İLETİŞİM</a></li>
                         <li>
                             <a href="#">Hesabım</a>
@@ -192,146 +158,150 @@
                                 @{ if (Session["Admin"] == "Ürün Ekle")
                                     {
                                         <li><a href="/Alisveris/UrunEkle">@Session["Admin"]</a></li>
-                                        }
                                     }
+                                }
 
-                                    <li><a href="/Home/Index">Blog</a></li>
-                                    <li><a href="/Siparis/Index">Sepetim</a></li>
-                                    <li><a href="/Siparis/Odeme">Ödeme Yap</a></li>
-                                    <li><a href="./faq.html">SSS</a></li>
-                                    <li><a href="/Login/Register">Kaydol</a></li>
-                                    <li><a href="/Login/Index">Giriş</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="mobile-menu-wrap"></div>
+                                <li><a href="/Home/Index">Blog</a></li>
+                                <li><a href="/Siparis/Index">Sepetim</a></li>
+                                <li><a href="/Siparis/Odeme">Ödeme Yap</a></li>
+                                <li><a href="./faq.html">SSS</a></li>
+                                <li><a href="/Login/Register">Kaydol</a></li>
+                                <li><a href="/Login/Index">Giriş</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+    @RenderBody();
+    <!-- Partner Logo Section Begin -->
+    <div class="partner-logo">
+        <div class="container">
+            <div class="logo-carousel owl-carousel">
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="/Content/img/logo-carousel/logo-1.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="/Content/img/logo-carousel/logo-2.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="/Content/img/logo-carousel/logo-3.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="/Content/img/logo-carousel/logo-4.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="/Content/img/logo-carousel/logo-5.png" alt="">
+                    </div>
                 </div>
             </div>
-        </header>
-        <!-- Header End -->
-        @RenderBody();
-        <!-- Partner Logo Section Begin -->
-        <div class="partner-logo">
+        </div>
+    </div>
+    <!-- Partner Logo Section End -->
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <a href="#"><img src="/Content/img/footer-logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: Ahi Evran, 214. Cadde No:8, 06935 Sincan/Ankara</li>
+                            <li>Phone: +90 312 271 90 26</li>
+                            <li>Email: husyn@gmail.com</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Information</h5>
+                        <ul>
+                            <li><a href="#">Hakkımızda</a></li>
+                            <li><a href="#">Ödeme</a></li>
+                            <li><a href="#">İletişim</a></li>
+                            <li><a href="#">Serivius</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Hesabım</h5>
+                        <ul>
+                            <li><a href="#">Hesabım</a></li>
+                            <li><a href="#">İletişim</a></li>
+                            <li><a href="/Siparis/Index">Sepetim</a></li>
+                            <li><a href="#">Alışveriş</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Bültenimize Şimdi Katıl</h5>
+                        <p>Firmamız ve özel tekliflerimiz hakkındaki e-posta güncellemeleri alın.</p>
+                        <form action="#" class="subscribe-form">
+                            <input type="text" placeholder="E-Mail adresinizi giriniz">
+                            <button type="button">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
             <div class="container">
-                <div class="logo-carousel owl-carousel">
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="~/Content/img/logo-carousel/logo-1.png" alt="">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır |  <i class="fa fa-heart-o" aria-hidden="true"></i> by Asım Özbay</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="~/Content/img/logo-carousel/logo-2.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="~/Content/img/logo-carousel/logo-3.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="~/Content/img/logo-carousel/logo-4.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="~/Content/img/logo-carousel/logo-5.png" alt="">
+                        <div class="payment-pic">
+                            <img src="/Content/img/payment-method.png" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Partner Logo Section End -->
-        <!-- Footer Section Begin -->
-        <footer class="footer-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="footer-left">
-                            <div class="footer-logo">
-                                <a href="#"><img src="~/Content/img/footer-logo.png" alt=""></a>
-                            </div>
-                            <ul>
-                                <li>Address: Ahi Evran, 214. Cadde No:8, 06935 Sincan/Ankara</li>
-                                <li>Phone: +90 312 271 90 26</li>
-                                <li>Email: husyn@gmail.com</li>
-                            </ul>
-                            <div class="footer-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1">
-                        <div class="footer-widget">
-                            <h5>Information</h5>
-                            <ul>
-                                <li><a href="#">Hakkımızda</a></li>
-                                <li><a href="#">Ödeme</a></li>
-                                <li><a href="#">İletişim</a></li>
-                                <li><a href="#">Serivius</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="footer-widget">
-                            <h5>Hesabım</h5>
-                            <ul>
-                                <li><a href="#">Hesabım</a></li>
-                                <li><a href="#">İletişim</a></li>
-                                <li><a href="/Siparis/Index">Sepetim</a></li>
-                                <li><a href="#">Alışveriş</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="newslatter-item">
-                            <h5>Bültenimize Şimdi Katıl</h5>
-                            <p>Firmamız ve özel tekliflerimiz hakkındaki e-posta güncellemeleri alın.</p>
-                            <form action="#" class="subscribe-form">
-                                <input type="text" placeholder="E-Mail adresinizi giriniz">
-                                <button type="button">Abone Ol</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright-reserved">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="copyright-text">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır |  <i class="fa fa-heart-o" aria-hidden="true"></i> by Asım Özbay</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </div>
-                            <div class="payment-pic">
-                                <img src="~/Content/img/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer Section End -->
-        <!-- Js Plugins -->
-        <script src="~/Content/js/jquery-3.3.1.min.js"></script>
-        <script src="~/Content/js/bootstrap.min.js"></script>
-        <script src="~/Content/js/jquery-ui.min.js"></script>
-        <script src="~/Content/js/jquery.countdown.min.js"></script>
-        <script src="~/Content/js/jquery.nice-select.min.js"></script>
-        <script src="~/Content/js/jquery.zoom.min.js"></script>
-        <script src="~/Content/js/jquery.dd.min.js"></script>
-        <script src="~/Content/js/jquery.slicknav.js"></script>
-        <script src="~/Content/js/owl.carousel.min.js"></script>
-        <script src="~/Content/js/main.js"></script>
-        <script src="~/Scripts/jquery.validate.min.js"></script>
-        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    </body>
+    </footer>
+    <!-- Footer Section End -->
+    <!-- Js Plugins -->
+    <script src="/Content/js/jquery-3.3.1.min.js"></script>
+    <script src="/Content/js/bootstrap.min.js"></script>
+    <script src="/Content/js/jquery-ui.min.js"></script>
+    <script src="/Content/js/jquery.countdown.min.js"></script>
+    <script src="/Content/js/jquery.nice-select.min.js"></script>
+    <script src="/Content/js/jquery.zoom.min.js"></script>
+    <script src="/Content/js/jquery.dd.min.js"></script>
+    <script src="/Content/js/jquery.slicknav.js"></script>
+    <script src="/Content/js/owl.carousel.min.js"></script>
+    <script src="/Content/js/main.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Content/datatables/jquery.dataTables.min.js"></script>
+    <script src="/Content/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/Content/js/datatables-demo.js"></script>
+</body>
 
 </html>
+

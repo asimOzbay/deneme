@@ -1,0 +1,38 @@
+﻿
+@using PolatlıEksozSiparisForm.Models.VMs
+    <div class="select-items">
+        <table id="SepetPenceresi">
+            <tbody>
+                @{
+                    var sepettekiUrunler = new List<SepetVM>();
+                    sepettekiUrunler = (List<SepetVM>)Session["SepettekiUrunler"];
+                    if (sepettekiUrunler != null)
+                    {
+                        foreach (var item in sepettekiUrunler)
+                        {
+                            <tr>
+                                <td class="si-pic"><img src="/Content/img/select-product-1.jpg" alt=""></td>
+                                <td class="si-text">
+                                    <div class="product-selected">
+                                        <p>@item.Fiyati x @item.SepettekiUrunAdedi</p>
+                                        <h6>@item.Adi</h6>
+                                    </div>
+                                </td>
+                                <td class="si-close">
+                                    <i class="ti-close"></i>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="select-total">
+        <span>total:</span>
+        <h5>$120.00</h5>
+    </div>
+    <div class="select-button">
+        <a href="#" class="primary-btn view-card">Sepetim</a>
+        <a href="#" class="primary-btn checkout-btn">Ödeme Yap</a>
+    </div>

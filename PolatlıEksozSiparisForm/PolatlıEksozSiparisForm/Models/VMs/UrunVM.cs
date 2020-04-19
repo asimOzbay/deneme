@@ -15,6 +15,8 @@ namespace PolatlıEksozSiparisForm.Models.VMs
         public decimal Fiyati { get; set; }
         [Required(ErrorMessage = "StokMiktarı Alanı Boş geçilemez.")]
         public int StokMiktari { get; set; }
+
+        public int SepettekiUrunAdedi { get; set; }
         public long UserID { get; set; }
 
         public long KategoriLookUpID { get; set; }
