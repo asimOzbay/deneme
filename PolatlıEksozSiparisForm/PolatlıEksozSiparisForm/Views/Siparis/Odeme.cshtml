@@ -1,4 +1,4 @@
-﻿
+﻿@using PolatlıEksozSiparisForm.Models.VMs
 @{
     ViewBag.Title = "Odeme";
 }
@@ -84,12 +84,37 @@
                         <h4>Siparişleriniz</h4>
                         <div class="order-total">
                             <ul class="order-table">
-                                <li>Product <span>Toplam</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                <li class="fw-normal">Ara Toplam <span>$240.00</span></li>
-                                <li class="total-price">Toplam <span>$240.00</span></li>
+                                <li>SİPARİŞLER <span>Toplam</span></li>
+                                @{
+                                    var sepettekiUrunler = new List<SepetVM>();
+                                    sepettekiUrunler = (List<SepetVM>)Session["SepettekiUrunler"];
+                                    if (sepettekiUrunler != null)
+                                    {
+                                        foreach (var item in sepettekiUrunler)
+                                        {
+                                            <li class="fw-normal">@item.Fiyati x @item.SepettekiUrunAdedi <span>@(item.Fiyati * item.SepettekiUrunAdedi)</span></li>
+
+                                        }
+                                    }
+                                
+                                    var sepettekiUrun = new List<SepetVM>();
+                                    sepettekiUrun = (List<SepetVM>)Session["SepettekiUrunler"];
+                                    if (sepettekiUrun != null)
+                                    {
+                                        decimal toplam = 0;
+                                        foreach (var item in sepettekiUrun)
+                                        {
+                                            toplam = item.Fiyati * item.SepettekiUrunAdedi + toplam;
+                                        }
+                                <li class="total-price">Toplam <span> @toplam ₺</span></li>
+                                        
+                                    }
+                                    else
+                                    {
+                                <li class="total-price">Toplam <span> 0₺</span></li>
+                                       
+                                    }
+                                }
                             </ul>
                             <div class="payment-check">
                                 <div class="pc-item">

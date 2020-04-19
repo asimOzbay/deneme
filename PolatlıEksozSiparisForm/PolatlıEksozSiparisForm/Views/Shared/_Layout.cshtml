@@ -59,13 +59,13 @@
                     }
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="/Content/img/flag-1.jpg" data-imagecss="flag yt"
+                            <option value='yt' data-image="/Content/img/flag-turk.jpg" data-imagecss="flag yu"
+                                    data-title="English">
+                                 Türkçe
+                            </option>
+                            <option value='yu' data-image="/Content/img/flag-1.jpg" data-imagecss="flag yt"
                                     data-title="English">
                                 English
-                            </option>
-                            <option value='yu' data-image="/Content/img/flag-2.jpg" data-imagecss="flag yu"
-                                    data-title="Bangladesh">
-                                German
                             </option>
                         </select>
                     </div>
@@ -108,11 +108,26 @@
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
-                                    <span id="sepetUrunAdedi">@Session["SepetUrunAdedi"]</span>
+                                    <div id="sepetUrunAdedi">
+                                        <span></span>
+                                    </div>
                                 </a>
 
-                                <div class="cart-hover" id="sepetID">
-                                    @Html.Partial("~/Views/Home/SepetPartial.cshtml")
+                                <div class="cart-hover">
+                                    <div class="select-items">
+                                        <table id="SepetPenceresi">
+                                            <tbody id="sepetID"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="select-total" id="ToplamTutar">
+                                        <span>total:</span>
+                                        <h5></h5>
+                                    </div>
+                                    <div class="select-button">
+                                        <a href="#" class="primary-btn view-card">Sepetim</a>
+                                        <a href="#" class="primary-btn checkout-btn">Ödeme Yap</a>
+                                    </div>
+                                    @*@Html.Partial("~/Views/Home/SepetPartial.cshtml")*@
                                 </div>
                             </li>
                             <li class="cart-price">$150.00</li>
@@ -145,9 +160,9 @@
                             <a href="#">KATEGORİLER</a>
                             <ul class="dropdown">
 
-                                <li><a href="#">Egzoz</a></li>
-                                <li><a href="#">Egzoz Aparatları</a></li>
-                                <li><a href="#">Katalizör</a></li>
+                                <li><a href="/Kategori/Egzoz">Egzoz</a></li>
+                                <li><a href="/Kategori/Katalizor">Katalizör</a></li>
+                                <li><a href="/Kategori/EgzozAparatları">Egzoz Aparatları</a></li>
                             </ul>
                         </li>
 
@@ -273,7 +288,7 @@
                         <div class="copyright-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır |  <i class="fa fa-heart-o" aria-hidden="true"></i> by Asım Özbay</a>
+                            <script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır |  <i class="fa fa-heart-o" aria-hidden="true"></i> by Asım Özbay    İletişim: 05303080833</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                         <div class="payment-pic">

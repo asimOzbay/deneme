@@ -176,6 +176,11 @@
     <Content Include="Content\fonts\themify.svg" />
     <Content Include="Content\img\aparatlar\aparat-1.jpg" />
     <Content Include="Content\img\aparatlar\krom-uc-1.jpg" />
+    <Content Include="Content\img\arac-parfüm-3.jpg" />
+    <Content Include="Content\img\arac-parfüm-4.jpg" />
+    <Content Include="Content\img\arac-parfüm-6.jpg" />
+    <Content Include="Content\img\arac-parfüm-7.jpg" />
+    <Content Include="Content\img\arac-parfüm-8.jpg" />
     <Content Include="Content\img\banner-1.jpg" />
     <Content Include="Content\img\banner-2.jpg" />
     <Content Include="Content\img\banner-3.jpg" />
@@ -206,6 +211,8 @@
     <Content Include="Content\img\egzoz\honda-egzoz.jpg" />
     <Content Include="Content\img\flag-1.jpg" />
     <Content Include="Content\img\flag-2.jpg" />
+    <Content Include="Content\img\flag-anaTema.jpg" />
+    <Content Include="Content\img\flag-turk.jpg" />
     <Content Include="Content\img\footer-logo.png" />
     <Content Include="Content\img\hero-1.jpg" />
     <Content Include="Content\img\hero-2.jpg" />

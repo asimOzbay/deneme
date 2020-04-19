@@ -62,6 +62,7 @@ namespace PolatlıEksozSiparisForm.Controllers
                 {
                     vm = new UrunVM();
                     vm.Adi = item.Adi;
+                    vm.ID = item.ID;
                     vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
                     vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
                     vm.StokMiktari = item.StokMiktari;
@@ -117,17 +118,20 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.ToList();
-            foreach (var item in urunListesi)
+            var urunListesi = db.Urun.Where(x => x.GenericLookUp_Kategori.Name == "Katalizör").ToList();
+            if (urunListesi != null)
             {
-                vm = new UrunVM();
-                vm.Adi = item.Adi;
-                vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
-                vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
-                vm.StokMiktari = item.StokMiktari;
-                vm.Fiyati = item.Fiyati;
-                urunlerListesi.Add(vm);
-
+                foreach (var item in urunListesi)
+                {
+                    vm = new UrunVM();
+                    vm.Adi = item.Adi;
+                    vm.ID = item.ID;
+                    vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
+                    vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
+                    vm.StokMiktari = item.StokMiktari;
+                    vm.Fiyati = item.Fiyati;
+                    urunlerListesi.Add(vm);
+                }
             }
             return View(urunlerListesi);
 
@@ -176,17 +180,20 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.ToList();
-            foreach (var item in urunListesi)
+            var urunListesi = db.Urun.Where(x => x.GenericLookUp_Kategori.Name == "Egzoz Aparatları").ToList();
+            if (urunListesi != null)
             {
-                vm = new UrunVM();
-                vm.Adi = item.Adi;
-                vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
-                vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
-                vm.StokMiktari = item.StokMiktari;
-                vm.Fiyati = item.Fiyati;
-                urunlerListesi.Add(vm);
-
+                foreach (var item in urunListesi)
+                {
+                    vm = new UrunVM();
+                    vm.Adi = item.Adi;
+                    vm.ID = item.ID;
+                    vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
+                    vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
+                    vm.StokMiktari = item.StokMiktari;
+                    vm.Fiyati = item.Fiyati;
+                    urunlerListesi.Add(vm);
+                }
             }
             return View(urunlerListesi);
 

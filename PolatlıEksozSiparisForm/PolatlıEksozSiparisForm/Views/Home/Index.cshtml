@@ -1,4 +1,5 @@
-﻿
+﻿@using PolatlıEksozSiparisForm.Models.VMs
+
 @{
     ViewBag.Title = "Index";
 }
@@ -21,7 +22,7 @@
                             Cuma günü katalizör ürünlerimizde %5 indirimli!
                             Sizde bulunması zor bu ürünleri kaçırmayın.
                         </p>
-                        <a href="#" class="primary-btn">ŞİMDİ ALIŞVERİŞ ZAMANI</a>
+                        <a href="#" class="primary-btn">ŞİMDİ SATIN AL</a>
                     </div>
                 </div>
                 <div class="off-card">
@@ -40,7 +41,7 @@
                             Krom kaplı eksoz ucu sadece  30 tl.
 
                         </p>
-                        <a href="#" class="primary-btn">ŞİMDİ ALIŞVERİŞ ZAMANI</a>
+                        <a href="#" class="primary-btn">ŞİMDİ SATIN AL</a>
                     </div>
                 </div>
                 <div class="off-card">
@@ -200,23 +201,23 @@
 </section>
 <!-- Women Banner Section End -->
 <!-- Deal Of The Week Section Begin-->
-<section class="deal-of-week set-bg spad" data-setbg="/Content/img/time-bg.jpg">
+<section class="deal-of-week set-bg spad" data-setbg="/Content/img/arac-parfüm-8.jpg">
     <div class="container">
         <div class="col-lg-6 text-center">
             <div class="section-title">
-                <h2>Deal Of The Week</h2>
+                <h2>Haftanın Fırsatı</h2>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
-                    consectetur adipisicing elit
+                    Uzun süre kalıcı etkiye sahip araç parfümlerini sizin için indirdik.<br />
+                    Bu fırsatı kaçırma!
                 </p>
                 <div class="product-price">
-                    $35.00
-                    <span>/ HanBag</span>
+                    ₺13,90
+                    <span>/ Araç Parfümü</span>
                 </div>
             </div>
             <div class="countdown-timer" id="countdown">
                 <div class="cd-item">
-                    <span>56</span>
+                    <span>7</span>
                     <p>Days</p>
                 </div>
                 <div class="cd-item">
@@ -232,7 +233,7 @@
                     <p>Secs</p>
                 </div>
             </div>
-            <a href="#" class="primary-btn">Shop Now</a>
+            <a href="#" class="primary-btn">ŞİMDİ SATIN AL</a>
         </div>
     </div>
 </section>
@@ -510,24 +511,52 @@
 <!-- Latest Blog Section End -->
 
 
-
 <script type="text/javascript">
+    $(document).ready(function () {
+        sepetiGuncelle();
+    });
 
-    $(".icon_bag_alt").click(function () {
+    function sepetiGuncelle() {
+        $("#sepetID").find("tr").remove();
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetSepetIcerigi",
+            success: function (data) {
+                debugger;
+                var toplam = 0;
+                $.each(data, function (i, ele) {
+                    debugger;
+                    toplam = toplam + (data[i].Fiyati * data[i].SepettekiUrunAdedi);
+                    $("#sepetID").append("<tr><td class='si-pic'><img src='/Content/img/select-product-1.jpg' alt=''></td><td>" +
+                        "<td class='si-text'><div class='product-selected'><p>" + data[i].Fiyati + "₺ x " + data[i].SepettekiUrunAdedi + "</p><h6>" + data[i].Adi + "</h6></div></td>" +
+                        "<td class='si-close'><i class='ti-close'></i></td></tr >");
+                });
+                debugger;
+                $("#ToplamTutar").find("h5").remove();
+                $("#ToplamTutar").append("<h5>" + toplam + "₺</h5>");
+                $("#sepetUrunAdedi").find("span").remove();
+                $("#sepetUrunAdedi").append("<span>" + data.length + "</span>");
+            }
+        });
+    }
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
+
+    });
+
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
         debugger;
-        var form = $(this);
-        var url = form.attr('action');
 
         $.ajax({
             type: "POST",
             url: "/Home/SepeteEkle",
-            data: { ID: 4 }, // serializes the form's elements.
+            data: { ID: urunID }, // serializes the form's elements.
             success: function (data) {
-                $('#sepetUrunAdedi').text(data.urunAdedi);
-                (form).fadeOut(800, function () {
-                    form.html("sepetID").fadeIn().delay(2000);
-                    debugger;
-                });
+                debugger;
+                sepetiGuncelle();
             }
         });
     });

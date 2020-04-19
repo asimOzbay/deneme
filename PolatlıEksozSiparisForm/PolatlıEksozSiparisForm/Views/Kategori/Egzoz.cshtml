@@ -137,7 +137,7 @@
                                                 <i class="icon_heart_alt"></i>
                                             </div>
                                             <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                <li class="w-icon active" data-id="@item.ID"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                 <li class="quick-view"><a href="#">+ Quick View</a></li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
@@ -149,14 +149,13 @@
                                             </a>
                                             <div class="product-price">
                                                 @item.Fiyati
-                                                <span>@item.Fiyati + 10</span>
+                                                <span>@(item.Fiyati + 10);</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             }
                         }
-
 
                     </div>
                 </div>
@@ -174,25 +173,52 @@
 
 
 
-
-
 <script type="text/javascript">
+    $(document).ready(function () {
+        sepetiGuncelle();
+    });
 
-    $(".icon_bag_alt").click(function () {
+    function sepetiGuncelle() {
+        $("#sepetID").find("tr").remove();
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetSepetIcerigi",
+            success: function (data) {
+                debugger;
+                var toplam = 0;
+                $.each(data, function (i, ele) {
+                    debugger;
+                    toplam = toplam + (data[i].Fiyati * data[i].SepettekiUrunAdedi);
+                    $("#sepetID").append("<tr><td class='si-pic'><img src='/Content/img/select-product-1.jpg' alt=''></td><td>" +
+                        "<td class='si-text'><div class='product-selected'><p>" + data[i].Fiyati + "₺ x " + data[i].SepettekiUrunAdedi + "</p><h6>" + data[i].Adi + "</h6></div></td>" +
+                        "<td class='si-close'><i class='ti-close'></i></td></tr >");
+                });
+                debugger;
+                $("#ToplamTutar").find("h5").remove();
+                $("#ToplamTutar").append("<h5>" + toplam + "₺</h5>");
+                $("#sepetUrunAdedi").find("span").remove();
+                $("#sepetUrunAdedi").append("<span>" + data.length + "</span>");
+            }
+        });
+    }
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
+
+    });
+
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
         debugger;
-        var form = $(this);
-        var url = form.attr('action');
 
         $.ajax({
             type: "POST",
             url: "/Home/SepeteEkle",
-            data: { ID: 4 }, // serializes the form's elements.
+            data: { ID: urunID }, // serializes the form's elements.
             success: function (data) {
-                $('#sepetUrunAdedi').text(data.urunAdedi);
-                (form).fadeOut(800, function () {
-                    form.html("sepetID").fadeIn().delay(2000);
-                    $("#sepetID").load('@Url.Action("SepetPartial", "Home")')
-                });
+                debugger;
+                sepetiGuncelle();
             }
         });
     });
