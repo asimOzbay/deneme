@@ -231,11 +231,17 @@
     <Content Include="Content\img\latest-1.jpg" />
     <Content Include="Content\img\latest-2.jpg" />
     <Content Include="Content\img\latest-3.jpg" />
+    <Content Include="Content\img\logo-carousel\logo-1.jpg" />
     <Content Include="Content\img\logo-carousel\logo-1.png" />
+    <Content Include="Content\img\logo-carousel\logo-2.jpg" />
     <Content Include="Content\img\logo-carousel\logo-2.png" />
+    <Content Include="Content\img\logo-carousel\logo-3.jpg" />
     <Content Include="Content\img\logo-carousel\logo-3.png" />
     <Content Include="Content\img\logo-carousel\logo-4.png" />
+    <Content Include="Content\img\logo-carousel\logo-5.jpg" />
     <Content Include="Content\img\logo-carousel\logo-5.png" />
+    <Content Include="Content\img\logo-carousel\logo-anatema.png" />
+    <Content Include="Content\img\logo-carousel\typorama.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\payment-method.png" />
     <Content Include="Content\img\product-single\avatar-1.png" />
@@ -269,6 +275,13 @@
     <Content Include="Content\img\select-product-1.jpg" />
     <Content Include="Content\img\select-product-2.jpg" />
     <Content Include="Content\img\time-bg.jpg" />
+    <Content Include="Content\img\vitrin\arac-1.jpg" />
+    <Content Include="Content\img\vitrin\arac-2.jpg" />
+    <Content Include="Content\img\vitrin\arac-3.jpg" />
+    <Content Include="Content\img\vitrin\arac-4.png" />
+    <Content Include="Content\img\vitrin\arac-5.jpg" />
+    <Content Include="Content\img\vitrin\arac-7.jpg" />
+    <Content Include="Content\img\vitrin\arac-anatema.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\datatables-demo.js" />
     <Content Include="Content\js\imagesloaded.pkgd.min.js" />
@@ -321,25 +334,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004142016020_DBdenemeuyou.cs" />
-    <Compile Include="Migrations\202004142016020_DBdenemeuyou.designer.cs">
-      <DependentUpon>202004142016020_DBdenemeuyou.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004161919226_Foto.cs" />
-    <Compile Include="Migrations\202004161919226_Foto.designer.cs">
-      <DependentUpon>202004161919226_Foto.cs</DependentUpon>
+    <Compile Include="Migrations\202004202117429_retrtıjhjtgg.cs" />
+    <Compile Include="Migrations\202004202117429_retrtıjhjtgg.designer.cs">
+      <DependentUpon>202004202117429_retrtıjhjtgg.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Cache\YeniAuthorize.cs" />
     <Compile Include="Models\Cache\MemoryCacheManager.cs" />
     <Compile Include="Models\Cache\ICacheHelper.cs" />
     <Compile Include="Models\Cache\LookupHelper.cs" />
     <Compile Include="Models\Context\ContextDB.cs" />
     <Compile Include="Models\Entity\GenericLookUp.cs" />
     <Compile Include="Models\Entity\GenericLookUpType.cs" />
+    <Compile Include="Models\Entity\Siparis.cs" />
+    <Compile Include="Models\Entity\UrunSiparis.cs" />
     <Compile Include="Models\Entity\Users.cs" />
     <Compile Include="Models\Entity\Urun.cs" />
     <Compile Include="Models\Entity\UrunFoto.cs" />
+    <Compile Include="Models\VMs\AutoCompleteVM.cs" />
     <Compile Include="Models\VMs\SepetVM.cs" />
+    <Compile Include="Models\VMs\SiparisVM.cs" />
     <Compile Include="Models\VMs\UrunVM.cs" />
     <Compile Include="Models\VMs\userVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -385,6 +399,8 @@
     <Content Include="Views\Kategori\Katalizor.cshtml" />
     <Content Include="Views\Kategori\EgzozAparatları.cshtml" />
     <Content Include="Views\Home\SepetPartial.cshtml" />
+    <Content Include="Views\Siparis\Siparisler.cshtml" />
+    <Content Include="Views\Siparis\SiparisDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -394,19 +410,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UrunFotolari\" />
+    <Folder Include="Views\Authenticated\" />
     <Folder Include="Views\Base\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004142016020_DBdenemeuyou.resx">
-      <DependentUpon>202004142016020_DBdenemeuyou.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004161919226_Foto.resx">
-      <DependentUpon>202004161919226_Foto.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004202117429_retrtıjhjtgg.resx">
+      <DependentUpon>202004202117429_retrtıjhjtgg.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

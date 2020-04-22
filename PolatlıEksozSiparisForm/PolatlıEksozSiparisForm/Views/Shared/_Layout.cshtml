@@ -1,4 +1,8 @@
 ﻿@using PolatlıEksozSiparisForm.Models.VMs
+@using PolatlıEksozSiparisForm.Models.Cache
+
+
+@*@model AutoCompleteVM*@
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -39,7 +43,7 @@
                 <div class="ht-left">
                     <div class="mail-service">
                         <i class=" fa fa-envelope"></i>
-                        husyn@gmail.com
+                        ninova2014@gmail.com
                     </div>
                     <div class="phone-service">
                         <i class=" fa fa-phone"></i>
@@ -47,11 +51,13 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    @{ if (Session["Admin"] != null)
+                    @{
+                        MemoryCacheManager memoryCacheManager = new MemoryCacheManager();
+                        var result = memoryCacheManager.Get<bool>("GirisYapildiMi");
+                        if (result)
                         {
                             <a href="/Login/Index" class="login-panel">@Session["Giriş"]</a>
                         }
-
                         else
                         {
                             <a href="/Login/Index" class="login-panel"><i class="fa fa-user"></i></a>
@@ -59,9 +65,9 @@
                     }
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="/Content/img/flag-turk.jpg" data-imagecss="flag yu"
-                                    data-title="English">
-                                 Türkçe
+                            <option value='yu' data-image="/Content/img/flag3.jpg" data-imagecss="flag yt"
+                                    data-title="Turkish">
+                                Türkçe
                             </option>
                             <option value='yu' data-image="/Content/img/flag-1.jpg" data-imagecss="flag yt"
                                     data-title="English">
@@ -82,29 +88,31 @@
             <div class="inner-header">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <div class="logo">
+                        <div class="logo" style="padding:0px">
                             <a href="/Home/Index">
-                                <img src="/Content/img/logo.png" alt="">
+                                <img src="~/Content/img/logo-carousel/logo-anatema.png" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">Kategoriler</button>
+                            <button type="button" class="category-btn">Arama</button>
                             <div class="input-group">
-                                <input type="text" placeholder="Neye ihtiyacın var?">
-                                <button type="button"><i class="ti-search"></i></button>
+
+                                @*@Html.EditorFor(model => AutoCompleteVM, new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input type="text" name="Adi" id="Adi" placeholder="Neye ihtiyacın var?">
+                                <button onclick="btnSerachClick()" type="button"><i class="ti-search"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <li class="heart-icon">
+                            @*<li class="heart-icon">
                                 <a href="#">
                                     <i class="icon_heart_alt"></i>
                                     <span>1</span>
                                 </a>
-                            </li>
+                            </li>*@
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
@@ -124,13 +132,15 @@
                                         <h5></h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">Sepetim</a>
-                                        <a href="#" class="primary-btn checkout-btn">Ödeme Yap</a>
+                                        <a href="/Siparis/Index" class="primary-btn view-card">Sepetim</a>
+                                        <a href="/Siparis/Odeme" class="primary-btn checkout-btn">Ödeme Yap</a>
                                     </div>
                                     @*@Html.Partial("~/Views/Home/SepetPartial.cshtml")*@
+                           
                                 </div>
                             </li>
-                            <li class="cart-price">$150.00</li>
+
+
                         </ul>
                     </div>
                 </div>
@@ -144,9 +154,9 @@
                         <span>Hizmetlerimiz</span>
                         <ul class="depart-hover">
                             <li class="active"><a href="#">Egzoz Servisi</a></li>
-                            <li><a href="#">Egzoz Satışı</a></li>
-                            <li><a href="#">Egzoz Parçaları Temini</a></li>
-                            <li><a href="#">2.El Egzoz ve Parçaları</a></li>
+                            <li><a href="/Alisveris/Index">Egzoz Satışı</a></li>
+                            <li><a href="/Alisveris/Index">Egzoz Parçaları Temini</a></li>
+                            <li><a href="/Alisveris/Index">2.El Egzoz ve Parçaları</a></li>
                             <li><a href="#">Kaynak İşleri</a></li>
                             <li><a href="#">Elektrik Kaynağı İşleri</a></li>
                         </ul>
@@ -170,16 +180,16 @@
                         <li>
                             <a href="#">Hesabım</a>
                             <ul class="dropdown">
-                                @{ if (Session["Admin"] == "Ürün Ekle")
+                                @{ if (Session["Admin"] != null)
                                     {
-                                        <li><a href="/Alisveris/UrunEkle">@Session["Admin"]</a></li>
+                                        <li><a href="/Alisveris/UrunEkle">Ürün Ekle</a></li>
+                                        <li><a href="/Siparis/Siparisler">Siparişler</a></li>
                                     }
                                 }
 
-                                <li><a href="/Home/Index">Blog</a></li>
                                 <li><a href="/Siparis/Index">Sepetim</a></li>
                                 <li><a href="/Siparis/Odeme">Ödeme Yap</a></li>
-                                <li><a href="./faq.html">SSS</a></li>
+                                @*<li><a href="./faq.html">SSS</a></li>*@
                                 <li><a href="/Login/Register">Kaydol</a></li>
                                 <li><a href="/Login/Index">Giriş</a></li>
                             </ul>
@@ -229,15 +239,15 @@
     <footer class="footer-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="/Content/img/footer-logo.png" alt=""></a>
+                            <a href="#"><img src="~/Content/img/logo-carousel/logo-2.jpg" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: Ahi Evran, 214. Cadde No:8, 06935 Sincan/Ankara</li>
                             <li>Phone: +90 312 271 90 26</li>
-                            <li>Email: husyn@gmail.com</li>
+                            <li>Email: ninova2014@gmail.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -247,28 +257,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 offset-lg-1">
+                <div class="col-lg-3 offset-lg-1">
                     <div class="footer-widget">
                         <h5>Information</h5>
                         <ul>
                             <li><a href="#">Hakkımızda</a></li>
-                            <li><a href="#">Ödeme</a></li>
-                            <li><a href="#">İletişim</a></li>
+                            <li><a href="/Siparis/Odeme">Ödeme</a></li>
+                            <li><a href="/Home/Contact">İletişim</a></li>
                             <li><a href="#">Serivius</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="footer-widget">
                         <h5>Hesabım</h5>
                         <ul>
                             <li><a href="#">Hesabım</a></li>
-                            <li><a href="#">İletişim</a></li>
+                            <li><a href="/Home/Contact">İletişim</a></li>
                             <li><a href="/Siparis/Index">Sepetim</a></li>
-                            <li><a href="#">Alışveriş</a></li>
+                            <li><a href="/Alisveris/Index">Alışveriş</a></li>
                         </ul>
                     </div>
                 </div>
+                @*
+                    
                 <div class="col-lg-4">
                     <div class="newslatter-item">
                         <h5>Bültenimize Şimdi Katıl</h5>
@@ -279,6 +291,7 @@
                         </form>
                     </div>
                 </div>
+                *@
             </div>
         </div>
         <div class="copyright-reserved">
@@ -320,3 +333,29 @@
 
 </html>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Adi").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/Arama",
+                    type: "POST",
+                    dataType: "json",
+                    data: { text: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Adi, value: item.ID };
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                window.location.href = "/Alisveris/Index?text=" + ui.item.label;
+            }
+        });
+    });
+
+    function btnSerachClick() {
+        window.location.href = "/Alisveris/Index?text=" + $("#Adi").val();
+    }
+</script>

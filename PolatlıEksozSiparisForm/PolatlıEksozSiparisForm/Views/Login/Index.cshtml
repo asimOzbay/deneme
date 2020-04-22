@@ -1,7 +1,7 @@
 ﻿@using PolatlıEksozSiparisForm.Models.VMs
 @{
     ViewBag.Title = "Index";
-    
+
 }
 
 @model userVM
@@ -37,18 +37,18 @@
                            placeholder = "Şifre"})
                             @Html.ValidationMessageFor(x => x.Sifre)
 
-                           
+
 
                         </div>
                         <div class="group-input gi-check">
-                            <div class="gi-more">
-                                <label for="save-pass">
-                                    Şifre Kaydedilsin mi?
-                                    <input type="checkbox" id="save-pass">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <a href="#" class="forget-pass">Şifremi Unuttum</a>
-                            </div>
+                            @* <div class="gi-more">
+                                    <label for="save-pass">
+                                        Şifre Kaydedilsin mi?
+                                        <input type="checkbox" id="save-pass">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <a href="#" class="forget-pass">Şifremi Unuttum</a>
+                                </div> *@
                         </div>
                         <button type="submit" class="site-btn login-btn">Giriş Yap</button>
                     </form>

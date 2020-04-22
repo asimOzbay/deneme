@@ -1,4 +1,5 @@
-﻿using PolatlıEksozSiparisForm.Models.Context;
+﻿using PolatlıEksozSiparisForm.Models.Cache;
+using PolatlıEksozSiparisForm.Models.Context;
 using PolatlıEksozSiparisForm.Models.Entity;
 using PolatlıEksozSiparisForm.Models.VMs;
 using System;
@@ -14,12 +15,12 @@ namespace PolatlıEksozSiparisForm.Controllers
     public class AlisverisController : BaseController
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(string text)
         {
             ContextDB db = new ContextDB();
 
             //kategori listesini veri tabanından çektik
-            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2);
+            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2 && x.Aktif == true);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> kategoriListesi = new List<SelectListItem>();
@@ -38,7 +39,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             TempData["kategoriListesi"] = kategoriListesi;
 
 
-            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1);
+            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1 && x.Aktif == true);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> tipListesi = new List<SelectListItem>();
@@ -55,13 +56,20 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             //db den gelen liste SelectListItem listesine atıldıktan sonra son hali tempdata ile cshtml e atılıyor. (Login/Index sayfasında kullanıldı)
             TempData["tipListesi"] = tipListesi;
-
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.ToList();
+            var urunListesi = db.Urun.Where(x => x.Aktif == true).ToList();
+            if (urunListesi != null && !string.IsNullOrEmpty(text))
+            {
+                urunListesi = urunListesi.Where(x => x.Adi.Contains(text)).ToList();
+            }
             foreach (var item in urunListesi)
             {
+                var urunFoto = db.UrunFoto.FirstOrDefault(x => x.UrunID == item.ID && x.Aktif == true);
+                string path = urunFoto != null ? urunFoto.Path : "/Content/img/products/man-2.jpg";
                 vm = new UrunVM();
+                vm.Path = path;
+                vm.ID = item.ID;
                 vm.Adi = item.Adi;
                 vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
                 vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
@@ -75,6 +83,10 @@ namespace PolatlıEksozSiparisForm.Controllers
 
         }
 
+
+
+
+
         public ActionResult UrunDetay()
         {
             return View();
@@ -82,12 +94,16 @@ namespace PolatlıEksozSiparisForm.Controllers
 
 
 
+
+
+
+        [YeniAuthorize]
         public ActionResult UrunEkle()
         {
             ContextDB db = new ContextDB();
 
             //kategori listesini veri tabanından çektik
-            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2);
+            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2 && x.Aktif == true);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> kategoriListesi = new List<SelectListItem>();
@@ -106,7 +122,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             TempData["kategoriListesi"] = kategoriListesi;
 
 
-            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1);
+            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1 && x.Aktif == true);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> tipListesi = new List<SelectListItem>();
@@ -126,10 +142,14 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.ToList();
+            var urunListesi = db.Urun.Where(x => x.Aktif == true).ToList();
             foreach(var item in urunListesi)
-            { 
+            {
+                var urunFoto = db.UrunFoto.FirstOrDefault(x => x.UrunID == item.ID && x.Aktif == true);
+                string path = urunFoto != null ? urunFoto.Path : "/Content/img/products/man-2.jpg";
                 vm = new UrunVM();
+                vm.Path = path;
+                vm.ID = item.ID;
                 vm.Adi = item.Adi;
                 vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
                 vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
@@ -147,14 +167,15 @@ namespace PolatlıEksozSiparisForm.Controllers
             string fileName = GetFileName() + ".jpg";
             if (file != null)
             {
-                string filePath = Path.GetFullPath(@"C:/Content/Images/" + fileName);  //Path.GetFullPath(@"C:/Content/Images/" + fileName); bu kullanım şöyle de Kullanılabilir "C:\\Content\\Images\\" + fileName;
+                
+                string filePath = Path.Combine(Server.MapPath("~/UrunFotolari/"), fileName);  //Path.GetFullPath(@"C:/Content/Images/" + fileName); bu kullanım şöyle de Kullanılabilir "C:\\Content\\Images\\" + fileName;
                 file.SaveAs(filePath);
             }
             Urun urun = new Urun { Adi = vm.Adi, Fiyati = vm.Fiyati, StokMiktari = vm.StokMiktari, UrunTipiLookUpID = vm.UrunTipiLookUpID, KategoriLookUpID = vm.KategoriLookUpID, UserID = vm.UserID };
             urun.UserID = 2;
 
             ContextDB db = new ContextDB();
-            var dbUrun = db.Urun.FirstOrDefault(x => x.Adi == vm.Adi);
+            var dbUrun = db.Urun.FirstOrDefault(x => x.Adi == vm.Adi && x.Aktif == true);
 
 
             if (dbUrun == null)
@@ -163,7 +184,7 @@ namespace PolatlıEksozSiparisForm.Controllers
 
                 db.SaveChanges();
 
-                UrunFoto urunFoto = new UrunFoto { UrunID = urun.ID, DosyaAdi = fileName, Path = "C:/Content/Images/" + fileName };
+                UrunFoto urunFoto = new UrunFoto { UrunID = urun.ID, DosyaAdi = fileName, Path = "/UrunFotolari/" + fileName };
                 db.UrunFoto.Add(urunFoto);
                 db.SaveChanges();
 
@@ -184,7 +205,7 @@ namespace PolatlıEksozSiparisForm.Controllers
 
                 TempData["Message"] = "Kayıt Mevcut";
             TempData["Success"] = false;
-            return RedirectToAction("Index");
+            return RedirectToAction("UrunEkle");
 
         }
 
@@ -199,6 +220,33 @@ namespace PolatlıEksozSiparisForm.Controllers
             var second = yil.Second < 10 ? "0" + yil.Second.ToString() : yil.Second.ToString();
 
             return yil.Year + month + day + hour + minute + second;
+        }
+
+        public JsonResult UrunSil(long id)
+        {
+            try
+            {
+                ContextDB db = new ContextDB();
+                var urun = db.Urun.FirstOrDefault(x => x.ID == id && x.Aktif == true);
+                if(urun != null)
+                {
+                    urun.Aktif = false;
+                    db.SaveChanges();
+
+                    var urunFoto = db.UrunFoto.FirstOrDefault(x => x.UrunID == urun.ID && x.Aktif);
+                    if (urunFoto != null)
+                    {
+                        urunFoto.Aktif = false;
+                        db.SaveChanges();
+                    }
+                    return Json(new { success = "basarili", mesaj = "Başarıyla silindi." });
+                }
+                return Json(new { success = "basarisiz", mesaj = "İşlem sırasında bir hata ile karşılaşıldı" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new {success = "basarisiz", mesaj = "İşlem sırasında bir hata ile karşılaşıldı" });
+            }
         }
     }
 }

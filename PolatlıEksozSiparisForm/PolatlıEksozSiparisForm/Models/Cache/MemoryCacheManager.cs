@@ -29,7 +29,11 @@ namespace PolatlıEksozSiparisForm.Models.Cache
 
         public T Get<T>(string key)
         {
-            return (T)cache.Get(key);
+            var varMi = Contains(key);
+            if (varMi)
+                return (T)cache.Get(key);
+            else
+                return default(T);
         }
 
         public void Remove(string key)

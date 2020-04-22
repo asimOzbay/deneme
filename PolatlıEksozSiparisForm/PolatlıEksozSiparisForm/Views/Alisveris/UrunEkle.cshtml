@@ -34,8 +34,6 @@
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="register-form">
                     <img src="~/Content/img/egzoz-2.jpg" class="avatar img-circle img-thumbnail" alt="avatar">
-                    <h6>Ürün fotoğrafı yükle...</h6>
-                    <input type="file" name="file" id="file" class="text-center center-block well well-sm">
                 </div>
             </div>
 
@@ -66,6 +64,11 @@
                         <div class="group-input">
                             <label for="Fiyat">FİYATI</label>
                             <input type="number" id="Fiyati" name="Fiyati" placeholder="Ürünün fiyatını giriniz">
+                        </div>
+
+                        <div class="register-form">
+                            <h6>ÜRÜN FOTOĞRAFI</h6>
+                            <input type="file" name="file" id="file" class="text-center center-block well well-sm">
                         </div>
 
                         <button type="submit" class="site-btn register-btn">KAYDET</button>
@@ -100,33 +103,21 @@
                                     <th><i class="ti-close"></i></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="urunEkleTablo">
                                 @{
                                     foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td class="cart-pic first-row"><img src="~/Content/img/cart-page/product-1.jpg" alt=""></td>
+                                        <tr id="@item.ID">
+                                            <td class="cart-pic first-row"><img src="@item.Path" alt=""></td>
                                             <td class="cart-title first-row">
                                                 <h5>@item.Adi</h5>
                                             </td>
                                             <td class="p-price first-row">@item.KategoriAdi</td>
                                             <td class="p-price first-row">@item.UrunTipiAdi</td>
-                                            <td class="qua-col first-row">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        <input type="text" value="@item.StokMiktari">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="qua-col first-row">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        <input type="text" value="@item.Fiyati">
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td class="qua-col first-row">@item.StokMiktari</td>
+                                            <td class="qua-col first-row">@item.Fiyati</td>
 
-                                            <td class="close-td first-row"><i class="ti-close"></i></td>
+                                            <td class="close-td first-row"><i class="ti-close" data-id="@item.ID"></i></td>
                                         </tr>
                                     }
                                 }
@@ -139,78 +130,72 @@
                                 <a href="#" class="primary-btn continue-shop">ALIŞVERİŞE DEVAM ET</a>
                                 <a href="#" class="primary-btn up-cart">SEPETİ GÜNCELLE</a>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        @*<div class="container-fluid">
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table" id="dataTable" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>ÜRÜN FOTO</th>
-                                        <th class="p-name">ÜRÜN ADI</th>
-                                        <th>ÜRÜN KATEGORİSİ</th>
-                                        <th>ÜRÜN TİPİ</th>
-                                        <th>STOK MİKTARI</th>
-                                        <th>FİYAT</th>
-                                        <th><i class="ti-close"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td class="cart-pic first-row"><img src="~/Content/img/cart-page/product-1.jpg" alt=""></td>
-                                                <td class="cart-title first-row">
-                                                    <h5>@item.Adi</h5>
-                                                </td>
-                                                <td class="p-price first-row">@item.KategoriAdi</td>
-                                                <td class="p-price first-row">@item.UrunTipiAdi</td>
-                                                <td class="qua-col first-row">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty">
-                                                            <input type="text" value="@item.StokMiktari">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="qua-col first-row">
-                                                    <div class="quantity">
-                                                        <div class="pro-qty">
-                                                            <input type="text" value="@item.Fiyati">
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="close-td first-row"><i class="ti-close"></i></td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-
-
     </form>
 </section>
 
 
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        sepetiGuncelle();
+    });
 
+    function sepetiGuncelle() {
+        $("#sepetID").find("tr").remove();
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetSepetIcerigi",
+            success: function (data) {
+                var toplam = 0;
+                $.each(data, function (i, ele) {
+                    toplam = toplam + (data[i].Fiyati * data[i].SepettekiUrunAdedi);
+                    $("#sepetID").append("<tr><td class='si-pic'><img style='height: 80px;width: 80px;' src='" + data[i].Path + "' alt=''></td><td>" +
+                        "<td class='si-text'><div class='product-selected'><p>" + data[i].Fiyati + "₺ x " + data[i].SepettekiUrunAdedi + "</p><h6>" + data[i].Adi + "</h6></div></td>" +
+                        "<td class='si-close'><i class='ti-close'></i></td></tr >");
+                });
+                $("#ToplamTutar").find("h5").remove();
+                $("#ToplamTutar").append("<h5>" + toplam + "₺</h5>");
+                $("#sepetUrunAdedi").find("span").remove();
+                $("#sepetUrunAdedi").append("<span>" + data.length + "</span>");
+            }
+        });
+    }
+
+
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "/Home/SepeteEkle",
+            data: { ID: urunID }, //methoda giden parametreler gönderilir. (sepete ekle methodu: SepeteEkle(long ID) )
+            success: function (data) {
+                sepetiGuncelle();
+            }
+        });
+    });
+
+    $(".ti-close").click(function () {
+        var urunID = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "/Alisveris/UrunSil",
+            data: { ID: urunID }, // serializes the form's elements.
+            success: function (data) {
+                if (data.success == "basarili") {
+                    $("#" + urunID).remove();
+                }
+                else {
+                    alert(data.mesaj);
+                }
+            }
+        });
+    });
+    
+</script>

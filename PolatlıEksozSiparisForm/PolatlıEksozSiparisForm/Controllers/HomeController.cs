@@ -17,7 +17,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             ContextDB db = new ContextDB();
 
             //kategori listesini veri tabanından çektik
-            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2);
+            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2 && x.Aktif);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> kategoriListesi = new List<SelectListItem>();
@@ -36,7 +36,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             TempData["kategoriListesi"] = kategoriListesi;
 
 
-            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1);
+            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1 && x.Aktif);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> tipListesi = new List<SelectListItem>();
@@ -56,13 +56,18 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.Where(x => x.GenericLookUp_Kategori.Name == "Katalizör").ToList();
+
+            var urunListesi = db.Urun.Where(x => x.Aktif).ToList();
             if (urunListesi != null)
             {
                 foreach (var item in urunListesi)
                 {
+                    var urunFoto = db.UrunFoto.FirstOrDefault(x => x.UrunID == item.ID && x.Aktif);
+                    string path = urunFoto != null ? urunFoto.Path : "/Content/img/products/man-2.jpg";
                     vm = new UrunVM();
+                    vm.Path = path;
                     vm.Adi = item.Adi;
+                    vm.ID = item.ID;
                     vm.KategoriAdi = item.GenericLookUp_Kategori.Name;
                     vm.UrunTipiAdi = item.GenericLookUp_UrunTipi.Name;
                     vm.StokMiktari = item.StokMiktari;
@@ -70,15 +75,34 @@ namespace PolatlıEksozSiparisForm.Controllers
                     urunlerListesi.Add(vm);
                 }
             }
-            return View(urunlerListesi);
 
+            return View(urunlerListesi);
         }
+
+        public JsonResult Arama(string text)
+        {
+            ContextDB db = new ContextDB();
+            var data = db.Urun.Where(x => x.Adi.Contains(text) && x.Aktif).ToList();
+            List<AutoCompleteVM> liste = new List<AutoCompleteVM>();
+            if (data != null)
+            {
+                foreach (var item in data)
+                {
+                    AutoCompleteVM vm = new AutoCompleteVM();
+                    vm.Adi = item.Adi;
+                    vm.ID = item.ID;
+                    liste.Add(vm);
+                }
+            }
+            return Json(liste, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult EgzozAparatları()
         {
             ContextDB db = new ContextDB();
 
             //kategori listesini veri tabanından çektik
-            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2);
+            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2 && x.Aktif);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> kategoriListesi = new List<SelectListItem>();
@@ -97,7 +121,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             TempData["kategoriListesi"] = kategoriListesi;
 
 
-            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1);
+            var tipListDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 1 && x.Aktif);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> tipListesi = new List<SelectListItem>();
@@ -117,7 +141,7 @@ namespace PolatlıEksozSiparisForm.Controllers
 
             List<UrunVM> urunlerListesi = new List<UrunVM>();
             UrunVM vm;
-            var urunListesi = db.Urun.Where(x => x.GenericLookUp_Kategori.Name == "Egzoz Aparatları").ToList();
+            var urunListesi = db.Urun.Where(x => x.GenericLookUp_Kategori.Name == "Egzoz Aparatları" && x.Aktif).ToList();
             if (urunListesi != null)
             {
                 foreach (var item in urunListesi)
@@ -133,7 +157,7 @@ namespace PolatlıEksozSiparisForm.Controllers
             }
             return View(urunlerListesi);
         }
-         public ActionResult Contact()
+        public ActionResult Contact()
         {
             return View();
         }
@@ -149,7 +173,7 @@ namespace PolatlıEksozSiparisForm.Controllers
         {
             return View();
         }
-        
+
 
         public JsonResult SepeteEkle(long ID)
         {
@@ -157,8 +181,11 @@ namespace PolatlıEksozSiparisForm.Controllers
             {
                 var liste = new List<SepetVM>();
                 ContextDB db = new ContextDB();
-                var urun = db.Urun.FirstOrDefault(x => x.ID == ID);
-                var eklenecekUrunVM = new SepetVM { ID = urun.ID, Adi = urun.Adi, Fiyati = urun.Fiyati, SepettekiUrunAdedi = 1};
+                var urun = db.Urun.FirstOrDefault(x => x.ID == ID && x.Aktif);
+
+                var urunFoto = db.UrunFoto.FirstOrDefault(x => x.UrunID == urun.ID && x.Aktif);
+                string path = urunFoto != null ? urunFoto.Path : "/Content/img/products/man-2.jpg";
+                var eklenecekUrunVM = new SepetVM { ID = urun.ID, Adi = urun.Adi, Fiyati = urun.Fiyati, SepettekiUrunAdedi = 1, Path = path };
 
                 if (Session["SepettekiUrunler"] != null && Session["SepetUrunAdedi"] != null)
                 {

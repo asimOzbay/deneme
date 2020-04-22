@@ -17,5 +17,8 @@ namespace PolatlıEksozSiparisForm.Models.Context
         public DbSet<GenericLookUpType> GenericLookUpType { get; set; }
         public DbSet<Urun> Urun { get; set; }
         public DbSet<UrunFoto> UrunFoto { get; set; }
+        public DbSet<Siparis> Siparis { get; set; }
+        public DbSet<UrunSiparis> UrunSiparis { get; set; }
+
     }
 }

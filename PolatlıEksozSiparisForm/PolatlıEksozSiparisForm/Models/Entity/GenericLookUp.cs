@@ -8,10 +8,16 @@ namespace PolatlıEksozSiparisForm.Models.Entity
 {
     public class GenericLookUp
     {
+        public GenericLookUp()
+        {
+            Aktif = true;
+        }
+
         public long ID { get; set; }
         public string Name { get; set; }
         public string Aciklama { get; set; }
         public long GenericLookUpTypeID { get; set; }
+        public bool Aktif { get; set; }
 
 
         public ICollection<Urun> UrunKategori { get; set; }

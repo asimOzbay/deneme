@@ -26,5 +26,6 @@ namespace PolatlıEksozSiparisForm.Models.VMs
         public long UrunTipiLookUpID { get; set; }
 
         public string UrunTipiAdi { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -15,13 +15,13 @@
 <div class="map spad">
     <div class="container">
         <div class="map-inner">
-            <iframe src="https://goo.gl/maps/6FLnNVQ8M5dazqbQ9"
-                    height="610" style="border:0" allowfullscreen=""></iframe>
-            <div class="icon">
-                <i class="fa fa-map-marker"></i>
-            </div>
+            <iframe width="600" height="600" src="https://maps.google.com/maps?hl=en&amp;q=polatlı egzoz+(sincanAnkara)&amp;ie=UTF8&amp;t=&amp;z=15&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        </div>
+        <div class="icon">
+            <i class="fa fa-map-marker"></i>
         </div>
     </div>
+</div>
 </div>
 <!-- Map Section Begin -->
 <!-- Contact Section Begin -->
@@ -90,3 +90,47 @@
         </div>
     </div>
 </section>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        sepetiGuncelle();
+    });
+
+    function sepetiGuncelle() {
+        $("#sepetID").find("tr").remove();
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetSepetIcerigi",
+            success: function (data) {
+                var toplam = 0;
+                $.each(data, function (i, ele) {
+                    toplam = toplam + (data[i].Fiyati * data[i].SepettekiUrunAdedi);
+                    $("#sepetID").append("<tr><td class='si-pic'><img style='height: 80px;width: 80px;' src='" + data[i].Path + "' alt=''></td><td>" +
+                        "<td class='si-text'><div class='product-selected'><p>" + data[i].Fiyati + "₺ x " + data[i].SepettekiUrunAdedi + "</p><h6>" + data[i].Adi + "</h6></div></td>" +
+                        "<td class='si-close'><i class='ti-close'></i></td></tr >");
+                });
+                $("#ToplamTutar").find("h5").remove();
+                $("#ToplamTutar").append("<h5>" + toplam + "₺</h5>");
+                $("#sepetUrunAdedi").find("span").remove();
+                $("#sepetUrunAdedi").append("<span>" + data.length + "</span>");
+            }
+        });
+    }
+
+
+
+    $(".w-icon").click(function () {
+        var urunID = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "/Home/SepeteEkle",
+            data: { ID: urunID }, // serializes the form's elements.
+            success: function (data) {
+                sepetiGuncelle();
+            }
+        });
+    });
+</script>

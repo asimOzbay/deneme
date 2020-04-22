@@ -198,10 +198,9 @@ C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\bi
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\bin\System.Web.Mvc.xml
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.csprojAssemblyReference.cache
-C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.Migrations.DBdenemeuyou.resources
-C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.Migrations.Foto.resources
-C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.csproj.GenerateResource.cache
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.csproj.CoreCompileInputs.cache
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.csproj.CopyComplete
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.dll
 C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.pdb
+C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.Migrations.retrtıjhjtgg.resources
+C:\Users\ninov\source\repos\PolatlıEksozSiparisForm\PolatlıEksozSiparisForm\obj\Debug\PolatlıEksozSiparisForm.csproj.GenerateResource.cache

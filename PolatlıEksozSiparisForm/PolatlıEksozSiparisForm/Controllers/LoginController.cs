@@ -10,18 +10,18 @@ using System.Web.Mvc;
 
 namespace PolatlıEksozSiparisForm.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         // GET: Login
         public ActionResult Index()
         {
 
             ContextDB db = new ContextDB();
-            var urun = db.Urun.FirstOrDefault(x => x.Fiyati > 10);
-            var satici = db.Users.FirstOrDefault(x => x.ID == urun.UserID);
+            var urun = db.Urun.FirstOrDefault(x => x.Fiyati > 10 && x.Aktif);
+            var satici = db.Users.FirstOrDefault(x => x.ID == urun.UserID && x.Aktif);
 
             //kategori listesini veri tabanından çektik
-            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2);
+            var kategoriListesiDB = db.GenericLookUp.Where(x => x.GenericLookUpTypeID == 2 && x.Aktif);
 
             //combobox SelectListItem listesiyle kullanıldığı için yeni bir liste oluşturduk.
             List<SelectListItem> kategoriListesi = new List<SelectListItem>();
@@ -47,11 +47,12 @@ namespace PolatlıEksozSiparisForm.Controllers
         {
             Users user = new Users {Email = vm.Email, Sifre = vm.Sifre};
             ContextDB db = new ContextDB();
-            var dbMusteri = db.Users.FirstOrDefault(x => x.Email == vm.Email);
+            var dbMusteri = db.Users.FirstOrDefault(x => x.Email == vm.Email && x.Aktif);
             
             sifre sifre = new sifre();
 
-            Session["Giriş"] = dbMusteri.Adi + " " + dbMusteri.Soyadi;
+            
+            Session["Giriş"]= dbMusteri.Adi + " " + dbMusteri.Soyadi;
 
             if ( dbMusteri == null )
             {
@@ -69,12 +70,15 @@ namespace PolatlıEksozSiparisForm.Controllers
             {
                 TempData["Success"] = true;
                 Session["Admin"] = "Ürün Ekle";
+                SesionHelper.Add("GirisYapildiMi", true);
+                SesionHelper.Add("Kullanici", dbMusteri);
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 TempData["Success"] = true;
-                
+                SesionHelper.Add("Kullanici", dbMusteri);
+                SesionHelper.Add("GirisYapildiMi", true);
                 return RedirectToAction("Index", "Home");
             }
         }

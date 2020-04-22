@@ -8,6 +8,10 @@ namespace PolatlıEksozSiparisForm.Models.Entity
 {
     public class Urun
     {
+        public Urun()
+        {
+            Aktif = true;
+        }
         public long ID { get; set; }
         public string Adi { get; set; }
         public decimal Fiyati { get; set; }
@@ -15,11 +19,12 @@ namespace PolatlıEksozSiparisForm.Models.Entity
         public long UserID{ get; set; }
         public long KategoriLookUpID { get; set; }
         public long UrunTipiLookUpID { get; set; }
+        public bool Aktif { get; set; }
 
 
         [ForeignKey("UserID")]
         public Users Users { get; set; }
-
+        
         [ForeignKey("KategoriLookUpID")]
         public GenericLookUp GenericLookUp_Kategori { get; set; }
 
@@ -27,5 +32,7 @@ namespace PolatlıEksozSiparisForm.Models.Entity
         public GenericLookUp GenericLookUp_UrunTipi { get; set; }
 
         public ICollection<UrunFoto> UrunFoto { get; set; }
+
+        public ICollection<UrunSiparis> UrunSiparis { get; set; }
     }
 }

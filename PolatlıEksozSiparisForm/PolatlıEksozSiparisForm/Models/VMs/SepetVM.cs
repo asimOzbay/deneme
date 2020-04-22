@@ -14,5 +14,7 @@ namespace PolatlıEksozSiparisForm.Models.VMs
         [Required(ErrorMessage = "Fiyat Alanı Boş geçilemez.")]
         public decimal Fiyati { get; set; }
         public int SepettekiUrunAdedi { get; set; }
+
+        public string Path { get; set; }
     }
 }

@@ -7,6 +7,10 @@ namespace PolatlıEksozSiparisForm.Models.Entity
 {
     public class Users
     {
+        public Users()
+        {
+            Aktif = true;
+        }
         public long ID { get; set; }
         public string Adi { get; set; }
         public string Soyadi { get; set; }
@@ -16,5 +20,6 @@ namespace PolatlıEksozSiparisForm.Models.Entity
         public string Telefon { get; set; }
         public string Adres { get; set; }
         public ICollection<Urun> Uruns { get; set; }
+        public bool Aktif { get; set; }
     }
 }
